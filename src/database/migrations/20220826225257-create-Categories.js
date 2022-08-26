@@ -14,6 +14,8 @@ module.exports = {
         type: Sequelize.STRING,
       },
     });
+
+    return categoriesTable;
   },
 
   down: async (queryInterface) => await queryInterface.dropTable('Categories'),
