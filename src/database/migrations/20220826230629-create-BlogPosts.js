@@ -11,11 +11,11 @@ module.exports = {
       },
       title: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       content: {
         allowNull: false,
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
       },
       userId: {
         allowNull: false,
@@ -27,11 +27,11 @@ module.exports = {
       },
       published: {
         allowNull: false,
-        type: Sequelize.DATETIME,
+        type: Sequelize.DATE,
       },
       updated: {
         allowNull: false,
-        type: Sequelize.DATETIME,
+        type: Sequelize.DATE,
       },
     });
 
