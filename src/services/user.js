@@ -20,8 +20,8 @@ const getUsers = async () => {
 };
 
 const getUserById = async (id) => {
-  const user = await User.findOne({ where: { id } });
-  if (!user) return { code: 404, error: { message: 'User not found' } };
+  const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
+  if (!user) return { code: 404, error: { message: 'User does not exist' } };
 
   return { code: 200, data: user };
 };
