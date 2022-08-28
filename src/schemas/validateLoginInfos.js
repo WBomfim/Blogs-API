@@ -1,15 +1,21 @@
 const joi = require('joi');
 
+const INFO_EMPTY = '400|Some required fields are missing';
+
+const schemaEmail = joi.string().empty().required().messages({
+  'string.empty': INFO_EMPTY,
+  'any.required': '400|email is required',
+});
+
+const schemaPassword = joi.string().empty().required().messages({
+  'string.empty': INFO_EMPTY,
+  'any.required': '400|password is required',
+});
+
 const validateLoginInfos = ({ email, password }) => {
   const schema = joi.object().keys({
-    email: joi.string().empty().required().messages({
-      'string.empty': '400|Some required fields are missing',
-      'any.required': '400|Some required fields are missing',
-    }),
-    password: joi.string().empty().required().messages({
-      'string.empty': '400|Some required fields are missing',
-      'any.required': '400|Some required fields are missing',
-    }),
+    email: schemaEmail,
+    password: schemaPassword,
   });
 
   const { error } = schema.validate({ email, password });
