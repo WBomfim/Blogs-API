@@ -12,7 +12,7 @@ const schemaContent = joi.string().empty().required().messages({
   'any.required': '400|content is required',
 });
 
-const schemaCategoryId = joi.array().items(joi.number().empty().required().messages({
+const schemaCategoryIds = joi.array().items(joi.number().empty().required().messages({
   'number.empty': INFO_EMPTY,
   'any.required': '400|categoryId is required',
 })).empty().required()
@@ -21,14 +21,14 @@ const schemaCategoryId = joi.array().items(joi.number().empty().required().messa
   'any.required': '400|categoryId is required',
 });
 
-const validatePostInfos = async ({ title, content, categoryId }) => {
+const validatePostInfos = async ({ title, content, categoryIds }) => {
   const schema = joi.object().keys({
     title: schemaTitle,
     content: schemaContent,
-    categoryId: schemaCategoryId,
+    categoryId: schemaCategoryIds,
   });
 
-  const { error } = schema.validate({ title, content, categoryId });
+  const { error } = schema.validate({ title, content, categoryIds });
   if (error) {
     const [code, message] = error.message.split('|');
     return { error: { code: Number(code), error: { message } } };
