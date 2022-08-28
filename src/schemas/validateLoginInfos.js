@@ -15,10 +15,10 @@ const validateLoginInfos = ({ email, password }) => {
   const { error } = schema.validate({ email, password });
   if (error) {
     const [code, message] = error.message.split('|');
-    return { code: Number(code), error: { message } };
+    return { error: { code: Number(code), error: { message } } };
   }
 
-  return false;
+  return true;
 };
 
 module.exports = validateLoginInfos;

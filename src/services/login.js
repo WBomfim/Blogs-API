@@ -3,8 +3,8 @@ const validateLogin = require('../schemas/validateLogin');
 const generateToken = require('../helpers/generateToken');
 
 const login = async ({ email, password }) => {
-  const isNotValidInfos = validateLoginInfos({ email, password });
-  if (isNotValidInfos) return isNotValidInfos;
+  const validateInfos = validateLoginInfos({ email, password });
+  if (validateInfos.error) return validateInfos.error;
 
   const user = await validateLogin({ email, password });
   if (user.error) return user.error;
