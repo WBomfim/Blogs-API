@@ -9,6 +9,14 @@ const addCategory = async (name) => {
   return { code: 201, data: category };
 };
 
+const getCategories = async () => {
+  const categories = await Category.findAll();
+  if (!categories) return { code: 404, error: { message: 'No categories found' } };
+
+  return { code: 200, data: categories };
+};
+
 module.exports = {
-  addCategory,  
+  addCategory,
+  getCategories,
 };
