@@ -7,14 +7,15 @@ const addUser = async (req, res) => {
   return res.status(code).json(data);
 };
 
-const getUsers = async (req, res) => {
+const getUsers = async (_req, res) => {
   const { code, data, error } = await userService.getUsers();
   if (error) return res.status(code).json(error);
   return res.status(code).json(data);
 };
 
 const getUserById = async (req, res) => {
-  const { code, data, error } = await userService.getUserById(req.params.id);
+  const { id } = req.params;
+  const { code, data, error } = await userService.getUserById(id);
   if (error) return res.status(code).json(error);
   return res.status(code).json(data);
 };

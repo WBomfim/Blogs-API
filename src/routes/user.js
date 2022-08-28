@@ -9,4 +9,6 @@ router.post('/', rescue(userController.addUser));
 
 router.get('/', auth, rescue(userController.getUsers));
 
+router.get('/:id', auth, rescue(userController.getUserById));
+
 module.exports = router;
