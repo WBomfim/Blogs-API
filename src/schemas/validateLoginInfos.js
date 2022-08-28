@@ -1,4 +1,5 @@
 const joi = require('joi');
+const { User } = require('../database/models');
 
 const INFO_EMPTY = '400|Some required fields are missing';
 
@@ -12,7 +13,7 @@ const schemaPassword = joi.string().empty().required().messages({
   'any.required': '400|password is required',
 });
 
-const validateLoginInfos = ({ email, password }) => {
+const validateLoginInfos = async ({ email, password }) => {
   const schema = joi.object().keys({
     email: schemaEmail,
     password: schemaPassword,
@@ -24,7 +25,12 @@ const validateLoginInfos = ({ email, password }) => {
     return { error: { code: Number(code), error: { message } } };
   }
 
-  return true;
+  const user = await User.findOne({ where: { email } });
+  if (!user || email !== user.email || password !== user.password) {
+    return { error: { code: 400, error: { message: 'Invalid fields' } } };
+  }
+
+  return user;
 };
 
 module.exports = validateLoginInfos;
