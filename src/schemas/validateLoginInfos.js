@@ -30,7 +30,7 @@ const validateLoginInfos = async ({ email, password }) => {
     return { error: { code: 400, error: { message: 'Invalid fields' } } };
   }
 
-  return user;
+  return { user };
 };
 
 module.exports = validateLoginInfos;
