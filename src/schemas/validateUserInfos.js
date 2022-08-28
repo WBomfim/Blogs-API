@@ -38,9 +38,10 @@ const validateUserInfos = async ({ displayName, email, password }) => {
   }
 
   const isEmailAlreadyExists = await User.findOne({ where: { email } });
-  if (!isEmailAlreadyExists) {
+  if (isEmailAlreadyExists) {
     return { error: { code: 409, error: { message: 'User already registered' } } };
   }
+  
   return true;
 };
 
