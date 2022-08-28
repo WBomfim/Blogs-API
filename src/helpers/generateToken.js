@@ -7,7 +7,12 @@ const generateToken = (user) => {
     email: user.email,
   };
 
-  const token = jwt.sign(payload, process.env.JWT_SECRET);
+  const config = {
+    expiresIn: '1d',
+    algorithm: 'HS256',
+  };
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET, config);
 
   return token;
 };
