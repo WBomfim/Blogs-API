@@ -19,7 +19,15 @@ const getUsers = async () => {
   return { code: 200, data: users };
 };
 
+const getUserById = async (id) => {
+  const user = await User.findOne({ where: { id } });
+  if (!user) return { code: 404, error: { message: 'User not found' } };
+
+  return { code: 200, data: user };
+};
+
 module.exports = {
   addUser,
   getUsers,
+  getUserById,
 };
