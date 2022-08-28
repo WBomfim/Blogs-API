@@ -1,10 +1,10 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const validateUserInfos = require('../schemas/validateUserInfos');
+const validateLoginInfos = require('../schemas/validateLoginInfos');
 const validateLogin = require('../schemas/validateLogin');
 
 const login = async ({ email, password }) => {
-  const isNotValidInfos = validateUserInfos({ email, password });
+  const isNotValidInfos = validateLoginInfos({ email, password });
   if (isNotValidInfos) return isNotValidInfos;
 
   const user = await validateLogin({ email, password });

@@ -1,6 +1,6 @@
 const joi = require('joi');
 
-const validateUserInfos = ({ email, password }) => {
+const validateLoginInfos = ({ email, password }) => {
   const schema = joi.object().keys({
     email: joi.string().empty().required().messages({
       'string.empty': '400|Some required fields are missing',
@@ -21,4 +21,4 @@ const validateUserInfos = ({ email, password }) => {
   return false;
 };
 
-module.exports = validateUserInfos;
+module.exports = validateLoginInfos;
