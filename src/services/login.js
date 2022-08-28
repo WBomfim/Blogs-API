@@ -1,16 +1,14 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { User } = require('../database/models');
 const validateUserInfos = require('../schemas/validateUserInfos');
+const validateLogin = require('../schemas/validateLogin');
 
-const login = ({ email, password }) => {
+const login = async ({ email, password }) => {
   const isNotValidInfos = validateUserInfos({ email, password });
   if (isNotValidInfos) return isNotValidInfos;
 
-  const user = User.findOne({ where: { email } });
-  if (!user || !user.password === password) {
-    return { code: 400, error: { message: 'Invalid fields' } };
-  }
+  const user = await validateLogin({ email, password });
+  if (user.error) return user.error;
 
   const payload = {
     id: user.id,
