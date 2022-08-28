@@ -14,6 +14,8 @@ const addUser = async ({ displayName, email, password, image }) => {
 
 const getUsers = async () => {
   const users = await User.findAll({ attributes: { exclude: ['password'] } });
+  if (!users) return { code: 404, error: { message: 'No users found' } };
+
   return { code: 200, data: users };
 };
 

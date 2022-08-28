@@ -7,6 +7,13 @@ const addUser = async (req, res) => {
   return res.status(code).json(data);
 };
 
+const getUsers = async (req, res) => {
+  const { code, data, error } = await userService.getUsers();
+  if (error) return res.status(code).json(error);
+  return res.status(code).json(data);
+};
+
 module.exports = {
   addUser,
+  getUsers,
 };
