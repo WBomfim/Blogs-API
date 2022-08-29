@@ -2,7 +2,7 @@ const joi = require('joi');
 
 const INFO_EMPTY = '400|Some required fields are missing';
 
-const validateCategoryName = async (name) => {
+const validateCategoryName = (name) => {
   const schema = joi.string().empty().required().messages({
     'string.empty': INFO_EMPTY,
     'any.required': '400|"name" is required',
