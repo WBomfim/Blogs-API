@@ -1,10 +1,10 @@
 const express = require('express');
 const rescue = require('express-rescue');
 const auth = require('../middlewares/auth');
-const postController = require('../controllers/post');
+const blogPostController = require('../controllers/blogPost');
 
 const router = express.Router();
 
-router.post('/', auth, rescue(postController.addPost));
+router.post('/', auth, rescue(blogPostController.addPost));
 
 module.exports = router;

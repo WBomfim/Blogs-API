@@ -3,7 +3,7 @@ const handleErrors = require('./middlewares/handleErrors');
 const loginRouter = require('./routes/login');
 const userRouter = require('./routes/user');
 const categoryRouter = require('./routes/category');
-const postRouter = require('./routes/post');
+const blogPostRouter = require('./routes/blogPost');
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.use('/user', userRouter);
 
 app.use('/categories', categoryRouter);
 
-app.use('/post', postRouter);
+app.use('/post', blogPostRouter);
 
 app.use(handleErrors);
 
