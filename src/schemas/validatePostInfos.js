@@ -1,22 +1,22 @@
 const joi = require('joi');
 const { Category } = require('../database/models');
 
-const INFO_EMPTY = '400|Some required fields are missing';
-
-const validateCategoryIds = async (categoryIds) => {
+const existThisCategories = async (categoryIds) => {
   const verifyCategories = categoryIds.map(async (categoryId) => {
     const category = await Category.findByPk(categoryId);
     if (!category) return false;
     return true;
   });
+  
   const verified = await Promise.all(verifyCategories);
-
   if (verified.includes(false)) {
     return { error: { code: 400, error: { message: '"categoryIds" not found' } } };
   }
 
   return true;
 };
+
+const INFO_EMPTY = '400|Some required fields are missing';
 
 const schemaTitle = joi.string().empty().required().messages({
   'string.empty': INFO_EMPTY,
@@ -48,7 +48,7 @@ const validatePostInfos = async ({ title, content, categoryIds }) => {
     return { error: { code: Number(code), error: { message } } };
   }
 
-  const verifyCategories = await validateCategoryIds(categoryIds);
+  const verifyCategories = await existThisCategories(categoryIds);
   if (verifyCategories.error) return verifyCategories;
 
   return true;
