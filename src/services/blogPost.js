@@ -22,6 +22,14 @@ const addPost = async ({ title, content, userId, categoryIds }) => {
   return { code: 201, data: result };
 };
 
+const getPosts = async () => {
+  const posts = await BlogPost.findAll();
+  if (!posts) return { code: 400, error: { message: 'Posts not found' } };
+
+  return { code: 200, data: posts };
+};
+
 module.exports = {
   addPost,
+  getPosts,
 };
