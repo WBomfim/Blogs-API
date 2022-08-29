@@ -12,6 +12,15 @@ const addPost = async (req, res) => {
   return res.status(code).json(data);
 };
 
+const getPosts = async (_req, res) => {
+  const { code, data, error } = await blogPostService.getPosts();
+
+  if (error) return res.status(code).json(error);
+
+  return res.status(code).json(data);
+};
+
 module.exports = {
   addPost,
+  getPosts,
 };
