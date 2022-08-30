@@ -11,4 +11,6 @@ router.get('/', auth, rescue(userController.getUsers));
 
 router.get('/:id', auth, rescue(userController.getUserById));
 
+router.delete('/me', auth, rescue(userController.deleteUser));
+
 module.exports = router;
