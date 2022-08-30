@@ -7,8 +7,8 @@ const addUser = async ({ displayName, email, password, image }) => {
   if (error) return error;
 
   const newUser = await User.create({ displayName, email, password, image });
+  
   const token = generateToken(newUser);
-
   return { code: 201, data: { token } };
 };
 

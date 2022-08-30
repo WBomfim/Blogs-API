@@ -6,7 +6,6 @@ const login = async ({ email, password }) => {
   if (error) return error;
 
   const token = generateToken(user);
-
   return { code: 200, data: { token } };
 };
 

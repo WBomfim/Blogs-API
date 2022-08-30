@@ -32,7 +32,7 @@ const getPosts = async () => {
     include: ASSOCIATIONS,
   });
 
-  if (!posts) return { code: 400, error: { message: 'Posts not found' } };
+  if (!posts || posts.length === 0) return { code: 400, error: { message: 'Posts not found' } };
 
   return { code: 200, data: posts };
 };

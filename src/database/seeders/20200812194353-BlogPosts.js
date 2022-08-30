@@ -18,7 +18,8 @@ module.exports = {
           published: new Date('2011-08-01T19:58:00.000Z'),
           updated: new Date('2011-08-01T19:58:51.000Z'),
         },
-      ]);
+      ]
+    );
   },
 
   down: async (queryInterface, _Sequelize) => {
