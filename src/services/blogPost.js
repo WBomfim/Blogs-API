@@ -35,16 +35,16 @@ const getPosts = async () => {
   return { code: 200, data: posts };
 };
 
-const getPostById = async (postId) => {
+const getPostById = async (id) => {
   const post = await BlogPost.findOne({
-    where: { id: postId },
+    where: { id },
     include: [
       { model: User, as: 'user', attributes: { exclude: ['password'] } },
       { model: Category, as: 'categories', through: { attributes: [] } },
     ],
   });
 
-  if (!post) return { code: 400, error: { message: 'Post not found' } };
+  if (!post) return { code: 404, error: { message: 'Post does not exist' } };
 
   return { code: 200, data: post };
 };
