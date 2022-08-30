@@ -9,6 +9,8 @@ router.post('/', auth, rescue(blogPostController.addPost));
 
 router.get('/', auth, rescue(blogPostController.getPosts));
 
+router.get('/search/', auth, rescue(blogPostController.searchPosts));
+
 router.get('/:id', auth, rescue(blogPostController.getPostById));
 
 router.put('/:id', auth, rescue(blogPostController.updatePost));

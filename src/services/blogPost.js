@@ -37,6 +37,21 @@ const getPosts = async () => {
   return { code: 200, data: posts };
 };
 
+const searchPosts = async (q) => {
+  const { Op } = Sequelize;
+  const posts = await BlogPost.findAll({
+    where: {
+      [Op.or]: [
+        { title: { [Op.like]: `%${q}%` } },
+        { content: { [Op.like]: `%${q}%` } },
+      ],
+    },
+    include: ASSOCIATIONS,
+  });
+
+  return { code: 200, data: posts };
+};
+
 const getPostById = async (id) => {
   const post = await BlogPost.findOne({
     where: { id },
@@ -74,6 +89,7 @@ const deletePost = async (userId, postId) => {
 module.exports = {
   addPost,
   getPosts,
+  searchPosts,
   getPostById,
   updatePost,
   deletePost,

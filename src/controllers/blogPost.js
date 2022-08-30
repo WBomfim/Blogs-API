@@ -20,6 +20,14 @@ const getPosts = async (_req, res) => {
   return res.status(code).json(data);
 };
 
+const searchPosts = async (req, res) => {
+  const { q } = req.query;
+  
+  const { code, data } = await blogPostService.searchPosts(q);
+
+  return res.status(code).json(data);
+};
+
 const getPostById = async (req, res) => {
   const { id } = req.params;
 
@@ -57,6 +65,7 @@ const deletePost = async (req, res) => {
 module.exports = {
   addPost,
   getPosts,
+  searchPosts,
   getPostById,
   updatePost,
   deletePost,
