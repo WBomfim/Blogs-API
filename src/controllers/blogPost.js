@@ -31,12 +31,23 @@ const getPostById = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
-  const { id } = req.params;
+  const { id: postId } = req.params;
   const { title, content } = req.body;
   const { id: userId } = req.user;
 
   const { code, data, error } = await blogPostService
-    .updatePost(userId, id, { title, content });
+    .updatePost(userId, postId, { title, content });
+
+  if (error) return res.status(code).json(error);
+
+  return res.status(code).json(data);
+};
+
+const deletePost = async (req, res) => {
+  const { id: postId } = req.params;
+  const { id: userId } = req.user;
+
+  const { code, data, error } = await blogPostService.deletePost(userId, postId);
 
   if (error) return res.status(code).json(error);
 
@@ -48,4 +59,5 @@ module.exports = {
   getPosts,
   getPostById,
   updatePost,
+  deletePost,
 };
