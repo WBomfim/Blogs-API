@@ -31,7 +31,7 @@ const getPosts = async () => {
   const posts = await BlogPost.findAll({
     include: ASSOCIATIONS,
   });
-  
+
   if (!posts) return { code: 400, error: { message: 'Posts not found' } };
 
   return { code: 200, data: posts };
@@ -61,9 +61,20 @@ const updatePost = async (userId, postId, { title, content }) => {
   return { code: 200, data: postUpdated };
 };
 
+const deletePost = async (userId, postId) => {
+  const { code, data, error } = await getPostById(postId);
+  if (error) return { code, error };
+
+  if (data.userId !== userId) return { code: 401, error: { message: 'Unauthorized user' } };
+
+  const postDeleted = await data.destroy();
+  return { code: 200, data: postDeleted };
+};
+
 module.exports = {
   addPost,
   getPosts,
   getPostById,
   updatePost,
+  deletePost,
 };
