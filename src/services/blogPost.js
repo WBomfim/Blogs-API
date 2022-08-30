@@ -1,12 +1,12 @@
 const Sequelize = require('sequelize');
 const { development, test } = require('../database/config/config');
 const { BlogPost, PostCategory, User, Category } = require('../database/models');
-const valadatePostInfos = require('../schemas/validatePostInfos');
+const validatePost = require('../schemas/validatePostInfos');
 
 const sequelize = new Sequelize(development || test);
 
 const addPost = async ({ title, content, userId, categoryIds }) => {
-  const { error } = await valadatePostInfos({ title, content, categoryIds });
+  const { error } = await validatePost.infosAdd({ title, content, categoryIds });
   if (error) return error;
 
   const result = await sequelize.transaction(async (trans) => {
@@ -49,8 +49,13 @@ const getPostById = async (id) => {
   return { code: 200, data: post };
 };
 
+const updatePost = async (id, { title, content }) => {
+
+};
+
 module.exports = {
   addPost,
   getPosts,
   getPostById,
+  updatePost,
 };

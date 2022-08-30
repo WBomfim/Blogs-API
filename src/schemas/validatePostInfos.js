@@ -35,7 +35,7 @@ const schemaCategoryIds = joi.array().min(1).required().items(joi.number())
     'number.base': '400|categoryIds must be a number',
   });
 
-const validatePostInfos = async ({ title, content, categoryIds }) => {
+const infosAdd = async ({ title, content, categoryIds }) => {
   const schema = joi.object().keys({
     title: schemaTitle,
     content: schemaContent,
@@ -54,4 +54,22 @@ const validatePostInfos = async ({ title, content, categoryIds }) => {
   return true;
 };
 
-module.exports = validatePostInfos;
+const infosUpdate = async ({ title, content }) => {
+  const schema = joi.object().keys({
+    title: schemaTitle,
+    content: schemaContent,
+  });
+
+  const { error } = schema.validate({ title, content });
+  if (error) {
+    const [code, message] = error.message.split('|');
+    return { error: { code: Number(code), error: { message } } };
+  }
+
+  return true;
+};
+
+module.exports = {
+  infosAdd,
+  infosUpdate,
+};
