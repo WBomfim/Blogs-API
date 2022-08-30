@@ -22,14 +22,16 @@ const addPost = async ({ title, content, userId, categoryIds }) => {
   return { code: 201, data: result };
 };
 
+const ASSOCIATIONS = [
+  { model: User, as: 'user', attributes: { exclude: ['password'] } },
+  { model: Category, as: 'categories', through: { attributes: [] } },
+];
+
 const getPosts = async () => {
   const posts = await BlogPost.findAll({
-    include: [
-      { model: User, as: 'user', attributes: { exclude: ['password'] } },
-      { model: Category, as: 'categories', through: { attributes: [] } },
-    ],
+    include: ASSOCIATIONS,
   });
-
+  
   if (!posts) return { code: 400, error: { message: 'Posts not found' } };
 
   return { code: 200, data: posts };
@@ -38,10 +40,7 @@ const getPosts = async () => {
 const getPostById = async (id) => {
   const post = await BlogPost.findOne({
     where: { id },
-    include: [
-      { model: User, as: 'user', attributes: { exclude: ['password'] } },
-      { model: Category, as: 'categories', through: { attributes: [] } },
-    ],
+    include: ASSOCIATIONS,
   });
 
   if (!post) return { code: 404, error: { message: 'Post does not exist' } };
@@ -50,16 +49,16 @@ const getPostById = async (id) => {
 };
 
 const updatePost = async (userId, postId, { title, content }) => {
-  const { error } = await validatePost.infosUpdate({ title, content });
-  if (error) return error;
+  const { error: errorValidate } = await validatePost.infosUpdate({ title, content });
+  if (errorValidate) return errorValidate;
 
-  const post = await BlogPost.findOne({ where: { id: postId } });
-  if (!post) return { code: 404, error: { message: 'Post does not exist' } };
+  const { code, data, error } = await getPostById(postId);
+  if (error) return { code, error };
 
-  if (post.userId !== userId) return { code: 401, error: { message: 'Unauthorized user' } };
+  if (data.userId !== userId) return { code: 401, error: { message: 'Unauthorized user' } };
 
-  const result = await post.update({ title, content });
-  return { code: 200, data: result };
+  const postUpdated = await data.update({ title, content });
+  return { code: 200, data: postUpdated };
 };
 
 module.exports = {

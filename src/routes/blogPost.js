@@ -11,4 +11,6 @@ router.get('/', auth, rescue(blogPostController.getPosts));
 
 router.get('/:id', auth, rescue(blogPostController.getPostById));
 
+router.put('/:id', auth, rescue(blogPostController.updatePost));
+
 module.exports = router;
