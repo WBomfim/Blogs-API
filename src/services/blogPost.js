@@ -68,7 +68,7 @@ const deletePost = async (userId, postId) => {
   if (data.userId !== userId) return { code: 401, error: { message: 'Unauthorized user' } };
 
   const postDeleted = await data.destroy();
-  return { code: 200, data: postDeleted };
+  return { code: 204, data: postDeleted };
 };
 
 module.exports = {
