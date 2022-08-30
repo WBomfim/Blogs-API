@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const { development, test } = require('../database/config/config');
-const { BlogPost, PostCategory } = require('../database/models');
+const { BlogPost, PostCategory, User, Category } = require('../database/models');
 const valadatePostInfos = require('../schemas/validatePostInfos');
 
 const sequelize = new Sequelize(development || test);
@@ -23,7 +23,13 @@ const addPost = async ({ title, content, userId, categoryIds }) => {
 };
 
 const getPosts = async () => {
-  const posts = await BlogPost.findAll();
+  const posts = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+
   if (!posts) return { code: 400, error: { message: 'Posts not found' } };
 
   return { code: 200, data: posts };
